@@ -1,0 +1,39 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+#include<malloc.h>
+
+int Zbroji(int* prvi, int broj)
+{
+	int zbroj = 0, i;
+	
+	for (i = 0; i < broj; i++)
+	{
+		zbroj = zbroj + *(prvi + i);
+	}
+	return zbroj;
+}
+
+
+int main()
+{
+	int niz[6], i, j, zbroj=0;
+
+	for (i = 0; i < 5; i++)
+	{
+		scanf("%d", &niz[i]);
+	}
+
+	zbroj = Zbroji(&niz[0], 5);
+
+	niz[5] = (30 - zbroj);
+	
+	for (j = 0; j < 6; j++)
+	{
+		printf("%d   ", niz[j]);
+	}
+
+	system("pause");
+	return 0;
+}
