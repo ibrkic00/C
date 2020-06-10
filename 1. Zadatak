@@ -1,0 +1,40 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+
+void IzracunajSredinu(int* Prvi, int brojClanova, int* aritmetickaSredina, int* geometrijaskaSredina)
+{
+	int i;
+	int* pom=Prvi;
+
+	for (i = 0; i < brojClanova; i++)
+	{
+		*aritmetickaSredina = *aritmetickaSredina + *(pom+i);
+	}
+	*aritmetickaSredina = (*aritmetickaSredina / brojClanova);
+
+	for (i = 0; i < brojClanova; i++)
+	{
+		*geometrijaskaSredina = *geometrijaskaSredina * (*(Prvi+i));
+	}
+	*geometrijaskaSredina = pow(*geometrijaskaSredina, (1.0/brojClanova));
+}
+
+int main()
+{
+	int niz[10], i, Aritmeticka = 0, Geometrijska = 1;
+
+	for (i = 0; i < 10; i++)
+	{
+		scanf("%d", &niz[i]);
+	}
+
+	IzracunajSredinu(&niz[0], sizeof(niz) / 4, &Aritmeticka, &Geometrijska);
+
+	printf("Aritmeticka sredina iznosi: %d, a geometrijska: %d", Aritmeticka, Geometrijska);
+
+
+	system("pause");
+	return 0;
+}
