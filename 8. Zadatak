@@ -1,0 +1,54 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<string.h>
+
+typedef struct
+{
+	int red_broj;
+	char naziv[50];
+	float rez;
+}_atleticar;
+
+int main()
+{
+	_atleticar niz[5];
+	_atleticar test;
+	int i, j;
+
+	for (i = 0; i < 5; i++)
+	{
+		niz[i].red_broj = (i + 1);
+		printf("Unesite ime %d atleticara: ", (i + 1));
+		scanf("%s", niz[i].naziv);
+		printf("Unesite rezultat %d atleticara: ", (i + 1));
+		scanf("%f", &niz[i].rez);
+	}
+
+	for (i = 0; i < 4; i++)
+	{
+		for (j = (i+1); j < 5; j++)
+		{
+			if (niz[j].rez > niz[i].rez)
+			{
+				test = niz[j];
+				niz[j] = niz[i];
+				niz[i] = test;
+			}
+		}
+	}
+
+	for (i = 0; i < 5; i++)
+	{
+		printf("%d \t %s \t %f\n", niz[i].red_broj, niz[i].naziv, niz[i].rez);
+	}
+
+
+
+	
+
+	system("pause");
+	return 0;
+}
