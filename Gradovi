@@ -1,0 +1,57 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+typedef struct
+{
+	char ime[50];
+	int brojStanovnika;
+}Gradovi;
+
+int broj(int minimalno, int maksimalno)
+{
+	return ((rand() % (maksimalno - minimalno + 1)) + minimalno);
+}
+
+void ispis(Gradovi* prvi, int brojGradova)
+{
+	int i;
+
+	for (i = 0; i < brojGradova; i++)
+	{
+		printf("Ime grada: %s\n", prvi[i].ime);
+		printf("Broj stanovnika: %d\n\n", prvi[i].brojStanovnika);
+	}
+}
+
+
+int main()
+{
+	int brojGradova, i;
+	Gradovi* prviGrad;
+	srand(time(0));
+
+	printf("Unesite broj gradova: ");
+	scanf("%d", &brojGradova);
+
+	prviGrad = (Gradovi*)malloc(brojGradova * sizeof(Gradovi));
+
+	for (i = 0; i < brojGradova; i++)
+	{
+		printf("Unesite ime %d. grada: ", i + 1);
+		scanf("%s", prviGrad[i].ime);
+		prviGrad[i].brojStanovnika = broj(10000, 30000);
+	}
+
+	ispis(prviGrad, brojGradova);
+
+	
+
+	system("pause");
+	return 0;
+}
