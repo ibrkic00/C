@@ -1,0 +1,95 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+typedef struct
+{
+	char ime[50];
+	int brojStanovnika;
+}Gradovi;
+
+int broj(int minimalno, int maksimalno)
+{
+	return ((rand() % (maksimalno - minimalno + 1)) + minimalno);
+}
+
+void ispis(Gradovi* prvi, int brojGradova)
+{
+	int i;
+
+	for (i = 0; i < brojGradova; i++)
+	{
+		printf("Ime grada: %s\n", prvi[i].ime);
+		printf("Broj stanovnika: %d\n\n", prvi[i].brojStanovnika);
+	}
+}
+
+void razlika(Gradovi* prvi, int brojGradova)
+{
+	int razlika, i, j;
+	Gradovi pomocni1, pomocni2;
+
+	for (i = 0; i < (brojGradova - 1); i++)
+	{
+		for (j = (i + 1); j < brojGradova; j++)
+		{
+			if (prvi[j].brojStanovnika < prvi[i].brojStanovnika)
+			{
+				pomocni1 = prvi[i];
+				prvi[i] = prvi[j];
+				prvi[j] = pomocni1;
+			}
+			
+		}
+	}
+
+	razlika = prvi[1].brojStanovnika - prvi[0].brojStanovnika;
+	pomocni1 = prvi[1];
+	pomocni2 = prvi[0];
+
+	for (i = 1; i < (brojGradova - 1); i++)
+	{
+		if ((prvi[i + 1].brojStanovnika - prvi[i].brojStanovnika) < razlika)
+		{
+			pomocni1 = prvi[i + 1];
+			pomocni2 = prvi[i];
+			razlika = (prvi[i + 1].brojStanovnika - prvi[i].brojStanovnika);
+		}
+	}
+
+	ispis(prvi, brojGradova);
+
+	printf("\nDva grada s najmanjom razlikom su %s i %s , a njihova razlika je %d.\n", pomocni1.ime, pomocni2.ime, razlika);
+}
+
+
+int main()
+{
+	int brojGradova, i;
+	Gradovi* prviGrad;
+	srand(time(0));
+
+	printf("Unesite broj gradova: ");
+	scanf("%d", &brojGradova);
+
+	prviGrad = (Gradovi*)malloc(brojGradova * sizeof(Gradovi));
+
+	for (i = 0; i < brojGradova; i++)
+	{
+		printf("Unesite ime %d. grada: ", i + 1);
+		scanf("%s", prviGrad[i].ime);
+		prviGrad[i].brojStanovnika = broj(10000, 30000);
+	}
+
+	ispis(prviGrad, brojGradova);
+
+	razlika(prviGrad, brojGradova);
+
+	system("pause");
+	return 0;
+}
