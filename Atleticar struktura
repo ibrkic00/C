@@ -1,0 +1,102 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+typedef struct
+{
+	int red_broj;
+	char naziv[50];
+	float rez;
+}_atleticar;
+
+void poredak(_atleticar* niz, int broj)
+{
+	int i;
+	int j;
+	_atleticar pomocni;
+
+	
+
+	for (i = 0; i < broj - 1; i++)
+	{
+		for (j = i + 1; j < broj; j++)
+		{
+			if (niz[j].rez > niz[i].rez)
+			{
+				pomocni = niz[i];
+				niz[i] = niz[j];
+				niz[j] = pomocni;
+			}
+
+		}
+	}
+
+}
+
+
+
+void ispis(_atleticar* prvi, int broj) {
+	
+	int i;
+
+	for (i = 0; i < broj; i++) {
+		printf("redni broj %d. atleticara je %d\n", i+1, prvi[i].red_broj);
+		printf("naziv %d. atleticara je %s\n", i+1, prvi[i].naziv);
+		printf("rezultat %d. atleticara je %f\n", i+1, prvi[i].rez);
+		printf("\n");
+	}
+}
+
+
+int main()
+{
+	int brojAtleticara, i;
+	_atleticar* prviAtleta;
+
+	FILE* _atl;
+	_atl = fopen("ime.txt", "w");
+
+
+
+
+	printf("Unesite broj atleticara: ");
+	scanf("%d", &brojAtleticara);
+
+	prviAtleta = (_atleticar*)malloc(brojAtleticara * sizeof(_atleticar));
+
+	for (i = 0; i < brojAtleticara; i++)
+	{
+		printf("Unesite redni broj %d. atleticara: ", i + 1);
+		scanf("%d", &prviAtleta[i].red_broj);
+		printf("Unesite naziv %d. atleticara: ", i + 1);
+		scanf("%s", prviAtleta[i].naziv);
+		printf("Unesite rezultat %d. atleticara: ", i + 1);
+		scanf("%f", &prviAtleta[i].rez);
+	}
+
+	printf("\n");
+	ispis(prviAtleta, brojAtleticara);
+
+	poredak(prviAtleta, brojAtleticara);
+
+	ispis(prviAtleta, brojAtleticara);
+
+	for (i = 0; i < brojAtleticara; i++)
+	{
+		fprintf(_atl, "redni broj %d. atleticara je:  %d ", i + 1, prviAtleta[i].red_broj);
+		fprintf(_atl, "naziv %d. atleticara je: %s", i + 1, prviAtleta[i].naziv);
+		fprintf(_atl, "rezultat %d. atleticara je %f \n", i + 1, prviAtleta[i].rez);
+		
+	}
+
+
+
+	fclose(_atl);
+
+	system("pause");
+	return 0;
+}
