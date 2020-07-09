@@ -1,0 +1,92 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+int jestmanjiod(int br1, int br2) {
+	if (br1 < br2) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+int jestveciod(int br1, int br2) {
+	if ( br1 > br2 ) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+void sortiraj(int* prCl, int brCl, int test) {
+
+	int i, j, k;
+
+	if (test == 1) {
+		for (i = 0; i < (brCl - 1); i++) {
+			for (j = i + 1; j < brCl; j++) {
+				if (jestmanjiod(prCl[j], prCl[i]))
+				{
+					k = prCl[j];
+					prCl[j] = prCl[i];
+					prCl[i] = k;
+				}
+			}
+		}
+	}
+	if (test == 2) {
+		for (i = 0; i < (brCl - 1); i++) {
+			for (j = i + 1; j < brCl; j++) {
+				if (jestveciod(prCl[j], prCl[i]))
+				{
+					k = prCl[j];
+					prCl[j] = prCl[i];
+					prCl[i] = k;
+				}
+			}
+		}
+	}
+}
+
+
+
+int main()
+{
+	int niz[5];
+	int i;
+	int var;
+	int* prCl;
+	
+
+	printf("unesite niz od 5 clanova : ");
+	for (i = 0; i < 5; i++) {
+		scanf("%d", &niz[i]);
+	}
+	printf("za sortiranje od manjeg prema vecem upisite 1, a za obrnuto upisite 2: ");
+	scanf("%d", &var);
+
+	do{
+		if (var == 1) {
+			sortiraj(&niz[0], 5, 1);
+		}
+		else if (var == 2) {
+			sortiraj(&niz[0], 5, 2);
+		}
+		else {
+			printf("niste unjeli 1 ni 2, molimo ponovo: \n");
+			scanf("%d", &var);
+		}} while ((var != 1) && (var != 2));
+	for (i = 0; i < 5; i++) {
+		printf("NIZ: %d", niz[i]);
+	
+	}
+	
+	system("pause");
+	return 0;
+}
