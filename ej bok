@@ -1,0 +1,67 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+void prebroj(char* niz, int* brojac)
+{
+	int test = 1;
+	char razmak = ' ';
+	int t = 0;
+	int duljinaNiza = strlen(niz);
+	int i;
+	while (test != 0)
+	{
+		if (niz[t] == razmak)
+		{
+			t++;
+		}
+		else
+		{
+			test = 0;
+		}
+
+	}
+
+
+	for (i = t; i <= duljinaNiza; i++)
+	{
+		while (niz[i] != razmak)
+		{
+			i++;
+		}
+		while (niz[i] == razmak)
+		{
+			i++;
+		}
+		*(brojac++);
+
+	}
+}
+
+
+int main()
+{
+	char niz[80];
+	
+	
+	
+	int rijec = 0;
+
+	gets_s(niz);
+	
+	
+
+	prebroj(niz, &rijec);
+
+	
+
+	printf("%d", rijec);
+
+	system("pause");
+	return 0;
+}
