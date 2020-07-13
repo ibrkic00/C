@@ -1,0 +1,116 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void ispis(int* niz, int brojElemenata)
+{
+	int i;
+	for (i = 0; i < brojElemenata; i++)
+	{
+		printf("%d  ", niz[i]);
+	}
+	printf("\n");
+}
+
+
+void unesi(int* prviElement, int brojElemenata)
+{
+	int i;
+	for (i = 0; i < brojElemenata; i++)
+	{
+		scanf("%d", &prviElement[i]);
+	}
+}
+
+void uzlazno(int* prviElement, int brojElemenata)
+{
+	int i, j;
+	int pom;
+	
+
+	for (i = 0; i < (brojElemenata - 1); i++)
+	{
+		for (j = (i + 1); j < brojElemenata; j++)
+		{
+			if (prviElement[j] < prviElement[i])
+			{
+				pom = *(prviElement+i);
+				*(prviElement+i)= *(prviElement+j);
+				*(prviElement+j) = pom;
+			}
+		}
+	}
+	
+}
+void silazno(int* prviElement, int brojElemenata)
+{
+	int i, j;
+	int pom;
+
+	for (i = 0; i < (brojElemenata - 1); i++)
+	{
+		for (j = (i + 1); j < brojElemenata; j++)
+		{
+			if (prviElement[j] > prviElement[i])
+			{
+				pom = prviElement[i];
+				prviElement[i] = prviElement[j];
+				prviElement[j] = pom;
+			}
+
+		}
+	}
+}
+
+int stvori(int *niz)
+{
+	int broj, test;
+	printf("Unesite broj elemenata: ");
+	scanf("%d", &broj);
+
+	niz = (int*)malloc(broj * sizeof(int));
+	unesi(niz, broj);
+
+
+	do
+	{
+		printf("Unesite 1 za uzlazno, ili 2 za silazno: ");
+		scanf("%d", &test);
+
+		switch (test)
+		{
+		case 1:
+			uzlazno(niz, broj);
+			break;
+		case 2:
+			silazno(niz, broj);
+			break;
+		default:
+			printf("Niste unijeli ispravan broj, pokusajte ponovo: ");
+			break;
+		}
+	} while ((test != 1) && (test != 2));
+	ispis(niz, broj);
+	return broj;
+}
+
+
+
+
+
+
+int main()
+{
+	int brojElemenata;
+	int* niz = NULL;
+	brojElemenata=stvori(niz);
+	ispis(niz, brojElemenata);
+	
+
+	system("pause");
+	return 0;
+}
