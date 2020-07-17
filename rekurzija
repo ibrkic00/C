@@ -1,0 +1,37 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+int rek(int* niz, int broj)
+{
+	if (broj <= 0)
+		return niz[broj];
+	else if(broj == 9)
+		return (niz[broj] + rek(niz, broj - 1)) / 10;
+	else
+		return niz[broj] + rek(niz, broj-1);
+}
+
+
+int main()
+{
+	int niz[10];
+	int i;
+	for (i = 0; i < 10; i++)
+	{
+		scanf("%d", &niz[i]);
+	}
+
+	int arsr;
+	arsr = rek(niz, 9);
+
+	printf("Aritmeticka sredina je: %d\n", arsr);
+	
+	system("pause");
+	return 0;
+}
