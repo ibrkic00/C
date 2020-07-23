@@ -1,0 +1,59 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+typedef struct {
+	int red_br;
+	char naziv[30];
+	float rez;
+}atleticar;
+
+void sortiraj(atleticar* ante, int brojAtleticara) {
+	int i, j;
+	atleticar var;
+
+	for (i = 0; i < (brojAtleticara - 1); i++) {
+		for (j = i + 1; j < brojAtleticara; j++) {
+			if (ante[i].rez > ante[j].rez) {
+				var = ante[i];
+				ante[i] = ante[j];
+				ante[j] = var;
+			}
+		}
+	}
+}
+void ispis(atleticar* ante,int brojAtleticara ) {
+	int i;
+
+	for (i = 0; i < brojAtleticara;i++) {
+		printf("%s %d %f", ante[i].naziv, ante[i].red_br, ante[i].rez);
+	}
+}
+
+int main(){
+	FILE* pok;
+	atleticar* ante;
+	int brojAtleticara;
+	int i;
+
+	pok = fopen("atleticari.txt", "r");
+
+
+	fscanf(pok, "%d", &brojAtleticara);
+	
+	ante = (atleticar*)malloc(brojAtleticara * sizeof(atleticar));
+
+	for (i = 0; i < brojAtleticara; i++) {
+		fscanf(pok,"%s %d %f", ante[i].naziv, &ante[i].red_br, &ante[i].rez);
+	
+	}
+	sortiraj(ante, brojAtleticara);
+	ispis(ante, brojAtleticara);
+	
+	system("pause");
+	return 0;
+}
