@@ -1,0 +1,130 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+typedef struct
+{
+	char prezime[50];
+	int tri, dva, jedan;
+}_kosarkas;
+
+void slozi(_kosarkas* prviKosarkas, int brojKosarkasa, char oznaka)
+{
+	int i, j;
+	_kosarkas pomocni;
+	if (oznaka == 't')
+	{
+		for (i = 0; i <= (brojKosarkasa-1); i++)
+		{
+			for (j = i + 1; j < (brojKosarkasa - 1); j++)
+			{
+				if (prviKosarkas[j].tri > prviKosarkas[i].tri)
+				{
+					pomocni = prviKosarkas[j];
+					prviKosarkas[j] = prviKosarkas[i];
+					prviKosarkas[i] = pomocni;
+				}
+			}
+		}
+	}
+
+	if (oznaka == 'd')
+	{
+		for (i = 0; i <= (brojKosarkasa - 1); i++)
+		{
+			for (j = i + 1; j < (brojKosarkasa - 1); j++)
+			{
+				if (prviKosarkas[j].dva > prviKosarkas[i].dva)
+				{
+					pomocni = prviKosarkas[j];
+					prviKosarkas[j] = prviKosarkas[i];
+					prviKosarkas[i] = pomocni;
+				}
+			}
+		}
+	}
+
+	if (oznaka == 'j')
+	{
+		for (i = 0; i <= (brojKosarkasa - 1); i++)
+		{
+			for (j = i + 1; j < (brojKosarkasa - 1); j++)
+			{
+				if (prviKosarkas[j].jedan > prviKosarkas[i].jedan)
+				{
+					pomocni = prviKosarkas[j];
+					prviKosarkas[j] = prviKosarkas[i];
+					prviKosarkas[i] = pomocni;
+				}
+			}
+		}
+	}
+}
+
+void printanje(_kosarkas* prvi, int brojKosarkasa)
+{
+	int i;
+	for (i = 0; i < brojKosarkasa; i++)
+	{
+		printf("%s\t%d\t%d\t%d\n", prvi[i].prezime, prvi[i].tri, prvi[i].dva, prvi[i].jedan);
+
+	}
+	printf("\n");
+}
+
+
+int main()
+{
+	FILE* Miami;
+	FILE* Detroit;
+	int test;
+	int brojKosarkasa = 0;
+	_kosarkas* kosarkasi=NULL;
+	Miami = fopen("miami.txt", "r");
+	Detroit = fopen("Detroit.txt", "r");
+
+
+	while (!feof(Miami))
+	{
+		brojKosarkasa++;
+		kosarkasi = (_kosarkas*)realloc(kosarkasi, brojKosarkasa * sizeof(_kosarkas));
+		fscanf(Miami, "%s %d %d %d", kosarkasi[brojKosarkasa-1].prezime,&kosarkasi[brojKosarkasa-1].tri, &kosarkasi[brojKosarkasa-1].dva, &kosarkasi[brojKosarkasa-1].jedan);
+	}
+
+	while (!feof(Detroit))
+	{
+		brojKosarkasa++;
+		kosarkasi = (_kosarkas*)realloc(kosarkasi, brojKosarkasa * sizeof(_kosarkas));
+		fscanf(Detroit, "%s %d %d %d", kosarkasi[brojKosarkasa - 1].prezime, &kosarkasi[brojKosarkasa - 1].tri, &kosarkasi[brojKosarkasa - 1].dva, &kosarkasi[brojKosarkasa - 1].jedan);
+	}
+	
+	printf("Odaberite nacin slaganja: 3, 2 ili 1?");
+	scanf("%d", &test);
+	switch (test)
+	{
+	case 3:
+		slozi(kosarkasi, brojKosarkasa, 't');
+		break;
+	case 2:
+		slozi(kosarkasi, brojKosarkasa, 'd');
+		break;
+	case 1:
+		slozi(kosarkasi, brojKosarkasa, 'j');
+		break;
+	default:
+		break;
+	}
+	
+	printanje(kosarkasi, brojKosarkasa);
+	
+
+	fclose(Miami);
+	fclose(Detroit);
+
+	system("pause");
+	return 0;
+}
