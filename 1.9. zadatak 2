@@ -1,0 +1,87 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+typedef struct
+{
+	char ime[50];
+	int kolicina, vrijednost;
+}_inventar;
+
+void ispis(_inventar* prvi, int broj)
+{
+	int i;
+	for (i = 0; i < broj; i++)
+	{
+		printf("%s\t%d\t%d\n", prvi[i].ime, prvi[i].kolicina, prvi[i].vrijednost);
+
+	}
+	printf("\n");
+}
+
+int najskuplji(_inventar* prvi, int broj)
+{
+	int pomocni=0, index=0, i;
+	for (i = 0; i < broj; i++)
+	{
+		if (prvi[i].vrijednost > pomocni)
+		{
+			pomocni = prvi[i].vrijednost;
+			index = i;
+		}
+	}
+	return index;
+}
+
+int main()
+{
+	_inventar* nizPredmeta = NULL;
+	int duljina = 2, brojPredmeta = 0, i;
+	int index;
+	char buf[50];
+	FILE* inventar;
+	inventar = fopen("inventar.txt", "w");
+	do
+	{
+		printf("Unesite naziv %d predmeta: ", brojPredmeta + 1);
+		fgets(buf, sizeof(buf), stdin);
+		if (brojPredmeta > 0)
+		{
+			fgets(buf, sizeof(buf), stdin);
+		}
+		duljina = strlen(buf) - 1;
+		if (duljina == 0)
+		{
+			break;
+		}
+		brojPredmeta++;
+		nizPredmeta = (_inventar*)realloc(nizPredmeta, brojPredmeta * sizeof(_inventar));
+		strcpy(nizPredmeta[brojPredmeta - 1].ime, buf);
+		printf("Unesite kolicinu: ");
+		scanf("%d", &nizPredmeta[brojPredmeta - 1].kolicina);
+		printf("unesite vrijednost jednog komada: ");
+		scanf("%d", &nizPredmeta[brojPredmeta - 1].vrijednost);
+
+	} while (duljina != 0);
+
+	ispis(nizPredmeta, brojPredmeta);
+
+	fprintf(inventar, "Jedinica\t Kolicina\t Jedinica Vrijednosti\n");
+	for (i = 0; i < brojPredmeta; i++)
+	{
+		fprintf(inventar, "%s\t %d\t %d\n", nizPredmeta[i].ime, nizPredmeta[i].kolicina, nizPredmeta[i].vrijednost);
+	}
+
+	index = najskuplji(nizPredmeta, brojPredmeta);
+
+
+	printf("\n Njaskuplja stvar je: %s\n", nizPredmeta[index].ime);
+	fclose(inventar);
+
+	system("pause");
+	return 0;
+}
