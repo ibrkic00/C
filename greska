@@ -1,0 +1,60 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void ispis(char* prviElement, int brojRijeci)
+{
+
+}
+
+
+int main()
+{
+	char rijec[30];
+	char** pok;
+	int brojRijeci, unosRijeci, velicinaRijeci, brojac, i;
+
+	printf("Unesite broj rijeci: ");
+	scanf("%d", &brojRijeci);
+
+	pok = (char**)malloc(brojRijeci * sizeof(char*));
+
+	for (unosRijeci = 1; unosRijeci <= brojRijeci; unosRijeci++)
+	{
+		printf("Unesite %d. rijec: ", unosRijeci);
+		fgets(rijec, sizeof(rijec), stdin);
+		fgets(rijec, sizeof(rijec), stdin);
+
+		velicinaRijeci = strlen(rijec);
+
+		pok[unosRijeci - 1] = (char*)malloc(velicinaRijeci * sizeof(char));
+
+		brojac = 0;
+		while (rijec[brojac] != '\n')
+		{
+			pok[unosRijeci][brojac] = rijec[brojac];
+			brojac++;
+		}
+		pok[unosRijeci][brojac] = rijec[brojac];
+	}
+
+	for (i = 0; i < brojRijeci; i++)
+	{
+		brojac = 0;
+		while (pok[i][brojac] != '\n')
+		{
+			printf("%c", pok[i][brojac]);
+			brojac++;
+		}
+		printf("\n");
+	}
+	
+	
+
+	system("pause");
+	return 0;
+}
