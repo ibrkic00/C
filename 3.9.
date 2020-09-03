@@ -1,0 +1,86 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void samogl(char** prviElement, int brojRedova)             //Funkcija koja traži broj suglasnika
+{
+	int brojacSuglasnika=0, i, brojac;
+	char test;
+	for (i = 0; i < brojRedova; i++)
+	{
+		brojac = 0;
+		while (prviElement[i][brojac] != '\n')
+		{
+			if ((prviElement[i][brojac] > 96) && (prviElement[i][brojac] < 123))
+			{
+				test = prviElement[i][brojac] - 32;
+			}
+			else
+			{
+				test = prviElement[i][brojac];
+			}
+			if ((test>='A' && test<='Z')&& !(test=='A' || test=='E' || test=='I' || test=='O' || test=='U'))
+			{
+				brojacSuglasnika++;
+			}
+			brojac++;
+		}
+	}
+
+	printf("\nBroj suglasnika je: %d\n", brojacSuglasnika);
+
+}
+
+
+int main()
+{
+	char niz[50];
+	char** pok=NULL;
+	char* pok1;
+	int test = 1, j = 0, brojac, velicina;
+
+	do                                                 //Ova petlja upisuje rečenice dok se ne unese enter 
+	{
+		fgets(niz, sizeof(niz), stdin);
+		if (niz[0] == '\n')
+			break;
+		j++;
+		
+		pok = (char**)realloc(pok, j * sizeof(char*));
+		if (pok == 0)
+			return -1;
+		velicina = strlen(niz);
+		pok[j - 1] = (char*)malloc((velicina) * sizeof(char));
+
+		brojac = 0;
+		while (niz[brojac] != '\n')
+		{
+			pok[j-1][brojac] = niz[brojac];
+			brojac++;
+		}
+		pok[j - 1][brojac] = niz[brojac];
+
+	} while (test != 0);
+
+	for (test = 0; test < j; test++)                                //Ova petlja nam služi za ispis rečenica
+	{
+		brojac = 0;
+		while (pok[test][brojac] != '\n')
+		{
+			printf("%c", pok[test][brojac]);
+			brojac++;
+		}
+		printf("\n");
+		
+	}
+	
+	samogl(pok, j);                                       //Pozivamo funkciju za suglasnike
+	
+
+	system("pause");
+	return 0;
+}
