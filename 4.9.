@@ -1,0 +1,84 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void ispis(char** prviElement, int brojRijeci)
+{
+	int i, j, k, test;
+
+	for (i = 0; i < brojRijeci; i++)
+	{
+		test = 0;
+		for (j = 0; prviElement[i][j + 1] != '\0'; j++)
+		{
+			if (prviElement[i][j] == prviElement[i][j + 1])
+			{
+				test = 1;
+			}
+		}
+		if (test)
+		{
+			for (j = 0; prviElement[i][j] != '\0'; j++)
+			{
+				printf("%c", prviElement[i][j]);
+			}
+			printf("\n");
+		}
+		
+	}
+	printf("\n");
+}
+
+
+int main()
+{
+	char rijec[30];
+	char** pok;
+	int brojRijeci, unosRijeci, velicinaRijeci, brojac, i;
+
+	printf("Unesite broj rijeci: ");
+	scanf("%d", &brojRijeci);
+	
+
+	pok = (char**)malloc(brojRijeci * sizeof(char*));
+
+	for (unosRijeci = 1; unosRijeci <= brojRijeci; unosRijeci++)
+	{
+		printf("Unesite %d. rijec: ", unosRijeci);
+		
+		scanf("%s", rijec);
+		
+		velicinaRijeci = strlen(rijec);
+
+		pok[unosRijeci - 1] = (char*)malloc(velicinaRijeci * sizeof(char));
+
+		brojac = 0;
+		while (rijec[brojac] != '\0')
+		{
+			pok[unosRijeci-1][brojac] = rijec[brojac];
+			brojac++;
+		}
+		pok[unosRijeci-1][brojac] = rijec[brojac];
+	}
+
+	for (i = 0; i < brojRijeci; i++)
+	{
+		brojac = 0;
+		while (pok[i][brojac] != '\0')
+		{
+			printf("%c", pok[i][brojac]);
+			brojac++;
+		}
+		printf("\n");
+	}
+	printf("\nRijeci sa dva ista slova jedan do drugoga:\n\n");
+	
+	ispis(pok, brojRijeci);
+
+	system("pause");
+	return 0;
+}
