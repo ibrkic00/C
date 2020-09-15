@@ -1,0 +1,100 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+typedef struct
+{
+	char ime[16];
+	int kolicina;
+	int cijena;
+	int godina;
+	float trenutnaVrijednost;
+}inventar;
+
+float zaduzenje(inventar* prviElement, int brojArtikala)
+{
+	float ukupnaVrijednost = 0;
+	int i, j;
+	for (i = 0; i < brojArtikala; i++)
+	{
+		prviElement[i].trenutnaVrijednost = (float)prviElement[i].kolicina * (float)prviElement[i].cijena;
+	}
+	
+	for (i = 0; i < brojArtikala; i++)
+	{
+		for (j = 0; j < (2020 - prviElement[i].godina); j++)
+		{
+			prviElement[i].trenutnaVrijednost = (prviElement[i].trenutnaVrijednost - (float)(prviElement[i].trenutnaVrijednost * 0.05));
+		}
+	}
+	for (i = 0; i < brojArtikala; i++)
+	{
+		ukupnaVrijednost = ukupnaVrijednost + prviElement[i].trenutnaVrijednost;
+	}
+	return ukupnaVrijednost;
+}
+
+
+int main()
+{
+	FILE* pok;
+	int brojElemenata, i;
+	inventar* lista;
+	float ukupnaVrijednost;
+
+	pok = fopen("inventar.txt", "r");
+
+	fscanf(pok, "%d", &brojElemenata);
+
+	lista = (inventar*)malloc(brojElemenata * sizeof(inventar));
+
+
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		fscanf(pok, "%s %d %d %d", lista[i].ime, &lista[i].kolicina, &lista[i].cijena, &lista[i].godina);
+	}
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		if (strlen(lista[i].ime) > 7)
+		{
+			printf("%s\t%d\t%d\t%d\n", lista[i].ime, lista[i].kolicina, lista[i].cijena, lista[i].godina);
+		}
+		else
+		{
+			printf("%s\t\t%d\t%d\t%d\n", lista[i].ime, lista[i].kolicina, lista[i].cijena, lista[i].godina);
+		}
+
+	}
+
+	ukupnaVrijednost = zaduzenje(lista, brojElemenata);
+
+	printf("\n");
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		if (strlen(lista[i].ime) > 7)
+		{
+			printf("%s\t%d\t%d\t%d\t\tTrenutna vrijednost je: %f\n", lista[i].ime, lista[i].kolicina, lista[i].cijena, lista[i].godina, lista[i].trenutnaVrijednost);
+		}
+		else
+		{
+			printf("%s\t\t%d\t%d\t%d\t\tTrenutna vrijednost je: %f\n", lista[i].ime, lista[i].kolicina, lista[i].cijena, lista[i].godina, lista[i].trenutnaVrijednost);
+		}
+
+	}
+
+	printf("\n");
+
+	printf("Ukupna trenutna vrijednost inventara je: %f\n", ukupnaVrijednost);
+
+	fclose(pok);
+	system("pause");
+	return 0;
+}
