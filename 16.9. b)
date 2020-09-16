@@ -1,0 +1,119 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+
+int generiraj(int, int);
+void pohrani(int**, int);
+int** upisi(int*, int[], int[]);
+
+
+int main()
+{
+	srand(time(0));
+	int** matrica = NULL;
+	int generiraniBroj, test1 = 1, test2 = 1, brojac = 1, i;
+	int granice[2], testniBroj[2];
+
+	printf("Unesite donju granicu odabira: ");
+	scanf("%d", &granice[0]);
+	printf("Unesite gornju granicu odabira: ");
+	scanf("%d", &granice[1]);
+
+	printf("Unesite prvi testni broj: ");
+	scanf("%d", &testniBroj[0]);
+	printf("Unesite drugi testni broj: ");
+	scanf("%d", &testniBroj[1]);
+
+
+	printf("\nDomena brojeva je [%d, %d]...", granice[0], granice[1]);
+
+	matrica=upisi(&brojac, granice, testniBroj);
+
+	printf("\n\nPrvi niz: \nTestni broj [%d]   ", matrica[0][0]);
+	for (i = 1; i < brojac; i++)
+	{
+		printf("%d ", matrica[0][i]);
+	}
+
+	printf("\n\nDrugi niz: \nTestni broj [%d]   ", matrica[1][0]);
+	for (i = 1; i < brojac; i++)
+	{
+		printf("%d ", matrica[1][i]);
+	}
+	printf("\n\n");
+
+	pohrani(matrica, brojac);
+
+	system("pause");
+	return 0;
+}
+
+int generiraj(int donjaGranica, int gornjaGranica)
+{
+	return ((rand() % (gornjaGranica - donjaGranica + 1)) + donjaGranica);
+}
+
+void pohrani(int** matrica, int brojStupaca)
+{
+	FILE* fp;
+	int i, j;
+	fp = fopen("matrica.txt", "w");
+
+	for (i = 0; i < 2; i++)
+	{
+		for (j = 0; j < brojStupaca; j++)
+		{
+			fprintf(fp, "%d ", matrica[i][j]);
+		}
+		fprintf(fp, "\n");
+	}
+	fclose(fp);
+
+
+}
+
+int** upisi(int* red, int granice[], int testniBrojevi[])
+{
+	int** matrica=NULL;
+	int brojac = 1, test1 = 1, test2 = 1, generiraniBroj;
+	matrica = (int**)malloc(2 * sizeof(int*));
+
+	
+	matrica[0] = (int*)malloc(1 * sizeof(int));
+	matrica[1] = (int*)malloc(1 * sizeof(int));
+
+	matrica[0][0] = testniBrojevi[0];
+	matrica[1][0] = testniBrojevi[1];
+
+	do
+	{
+		brojac++;
+
+		matrica[0] = (int*)realloc(matrica[0], brojac * sizeof(int));
+		generiraniBroj = generiraj(granice[0], granice[1]);
+		matrica[0][brojac - 1] = generiraniBroj;
+
+		if (generiraniBroj == testniBrojevi[0])
+		{
+			test1 = 0;
+		}
+
+		matrica[1] = (int*)realloc(matrica[1], brojac * sizeof(int));
+		generiraniBroj = generiraj(granice[0], granice[1]);
+		matrica[1][brojac - 1] = generiraniBroj;
+
+		if (generiraniBroj == testniBrojevi[1])
+		{
+			test2 = 0;
+		}
+
+	} while (test1 && test2);
+	*red = brojac;
+	return matrica;
+	
+}
