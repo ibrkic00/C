@@ -1,0 +1,84 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+int jestParan(int);
+int jestDjeljiv(int);
+int analiza(int*, int, int (*)(int));
+
+int main()
+{
+	int* niz=NULL;
+	int brojElemenata, i, odabir, brojac=0;
+
+	printf("Unesite broj elemenata niza: ");
+	scanf("%d", &brojElemenata);
+
+	niz = (int*)malloc(brojElemenata * sizeof(int));
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		scanf("%d", &niz[i]);
+	}
+	printf("Ovo je vas niz: ");
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		printf("%d  ", niz[i]);
+	}
+
+	printf("\nAko zelite izbrojati parne brojeve upisite 1, a za djeljivost 2: ");
+	scanf("%d", &odabir);
+
+	switch (odabir)
+	{
+	case 1:
+		brojac = analiza(niz, brojElemenata, jestParan);
+		printf("U vasem nizu ima %d parnih brojeva!!\n", brojac);
+		break;
+	case 2:
+		brojac = analiza(niz, brojElemenata, jestDjeljiv);
+		printf("U vasem nizu ima %d brojeva koji su djeljivi s 3, ali ne i sa 5!!\n", brojac);
+		break;
+	default:
+		printf("Unijeli ste krivi izbor, dovidenja!!\n");
+		break;
+	}
+
+	
+	
+	system("pause");
+	return 0;
+}
+
+int analiza(int* prviElement, int brojElemenata, int(* pozivFje)(int))
+{
+	int i, brojac = 0;
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		if (pozivFje(prviElement[i]))
+		{
+			brojac++;
+		}
+	}
+	return brojac;
+
+}
+
+int jestParan(int broj)
+{
+	return (broj % 2) ? 0 : 1;
+}
+
+int jestDjeljiv(int broj)
+{
+	return ((!(broj % 3) && (broj % 5)) ? 1 : 0);
+}
+
+
+
