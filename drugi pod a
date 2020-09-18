@@ -1,0 +1,107 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void ispisZnakova(char*, int, int(*)(char));
+int jestSamoglasnik(char);
+int jestSuglasnik(char);
+
+int main()
+{
+	char* niz=NULL;
+	char buffer;
+	int brojac = 0, i, brojac1=0, odabir;
+
+	do
+	{
+		buffer = getchar();
+		if (brojac == 0 && buffer == '\n')
+		{
+			break;
+		}
+		if (buffer == '\n')
+		{
+			brojac1++;
+		}
+		if (brojac1 == 1 && buffer != '\n')
+		{
+			brojac1 = 0;
+		}
+		if (brojac1 == 2 && buffer == '\n')
+		{
+			break;
+		}
+		if (brojac1 == 0)
+		{
+			brojac++;
+			niz = (char*)realloc(niz, brojac * sizeof(char));
+			niz[brojac - 1] = buffer;
+		}
+		
+	} while (1);
+	for (i = 0; i < brojac; i++)
+	{
+		printf("%c", niz[i]);
+	}
+	printf("\n\n");
+	printf("Zelite li samoglasnike birajte 1, a suglasnike 2: ");
+	scanf("%d", &odabir);
+	switch (odabir)
+	{
+	case 1:
+		ispisZnakova(niz, brojac, jestSamoglasnik);
+		break;
+	case 2:
+		ispisZnakova(niz, brojac, jestSuglasnik);
+		break;
+	default:
+		printf("Unijeli ste krivi broj.");
+		break;
+	}
+
+	system("pause");
+	return 0;
+}
+
+int jestSamoglasnik(char slovo)
+{
+	char velikoSlovo;
+	if ((slovo > 96) && (slovo < 123))
+	{
+		velikoSlovo = slovo - 32;
+	}
+	if ((velikoSlovo == 'A') || (velikoSlovo == 'E') || (velikoSlovo == 'I') || (velikoSlovo == 'O') || (velikoSlovo == 'U'))
+		return 1;
+	else
+		return 0;
+}
+int jestSuglasnik(char slovo)
+{
+	char velikoSlovo;
+	if ((slovo > 96) && (slovo < 123))
+	{
+		velikoSlovo = slovo - 32;
+	}
+	if ((velikoSlovo != 'A') && (velikoSlovo != 'E') && (velikoSlovo != 'I') && (velikoSlovo != 'O') && (velikoSlovo != 'U'))
+		return 1;
+	else
+		return 0;
+}
+
+void ispisZnakova(char* niz, int broj, int(*Fja)(char))
+{
+	int i;
+	for (i = 0; i < broj; i++)
+	{
+		if (Fja(niz[i]))
+			printf("%c ", niz[i]);
+	}
+	
+}
+
+
+
