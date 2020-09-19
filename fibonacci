@@ -1,0 +1,42 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void Fibonacci(int*, int);
+
+int main()
+{
+	int* niz=NULL;
+	int i, brojElemenata;
+	
+	printf("Unesite granicu: ");
+	scanf("%d", &brojElemenata);
+	niz = (int*)malloc(brojElemenata * sizeof(int));
+	Fibonacci(niz, brojElemenata);
+
+	for (i = 0; i < brojElemenata; i++)
+	{
+		printf("%d  ", niz[i]);
+	}
+	
+
+	system("pause");
+	return 0;
+}
+
+void Fibonacci(int* prviElement, int brojClanova)
+{
+
+	prviElement[0] = 1;
+	prviElement[1] = 1;
+	int i;
+	for (i = 2; i < brojClanova; i++)
+	{
+		prviElement[i] = prviElement[i - 2] + prviElement[i - 1];
+	}
+
+}
