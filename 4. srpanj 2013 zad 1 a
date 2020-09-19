@@ -1,0 +1,98 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+int Naj(int**, int);
+
+
+int main()
+{
+	int** matrica=NULL;
+	int red, i, j, indx, najZbroj=0;
+	float artSrd = 0;
+
+	printf("Unesite red matrice: ");
+	scanf("%d", &red);
+
+	matrica = (int**)malloc(red * sizeof(int*));
+	for (i = 0; i < red; i++)
+	{
+		matrica[i] = (int*)malloc(red * sizeof(int));
+	}
+
+	printf("Unosenje matrice...\n...\n...\n");
+	for (i = 0; i < red; i++)
+	{
+		for (j = 0; j < red; j++)
+		{
+			printf("Unesite element %d. redak, %d. stupac:....", i + 1, j + 1);
+			scanf("%d", &matrica[i][j]);
+		}
+	}
+	printf("Matrica:...\n");
+	for (i = 0; i < red; i++)
+	{
+		for (j = 0; j < red; j++)
+		{
+			printf("%d  ", matrica[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+
+	indx = Naj(matrica, red);
+
+	for (i = 0; i < red; i++)
+	{
+		artSrd = artSrd + matrica[i][i];
+	}
+	artSrd = artSrd / red;
+
+	for (i = 0; i < red; i++)
+	{
+		najZbroj = najZbroj + matrica[i][indx];
+	}
+
+	printf("\nZbroj stupca sa najvecim zbrojem je: %d\n", najZbroj);
+
+	printf("\nElementi stupca podijeljeni sa artm sred su:....\n");
+	for (i = 0; i < red; i++)
+	{
+		printf("%f\n", (float)matrica[i][indx] / artSrd);
+	}
+
+
+	system("pause");
+	return 0;
+}
+
+int Naj(int** matrica, int red)
+{
+	int i, j, zbrojStupca = 0, najStupac = 0, indxStupca = 0;
+	j = 0;
+	for (i = 0; i < red; i++)
+	{
+		zbrojStupca = zbrojStupca + matrica[i][j];
+	}
+	najStupac = zbrojStupca;
+	
+	for (j = 1; j < red; j++)
+	{
+		zbrojStupca = 0;
+		for (i = 0; i < red; i++)
+		{
+			zbrojStupca = zbrojStupca + matrica[i][j];
+		}
+		if (zbrojStupca > najStupac)
+		{
+			najStupac = zbrojStupca;
+			indxStupca = j;
+		}
+	}
+
+	return indxStupca;
+}
