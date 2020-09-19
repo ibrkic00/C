@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+#include<math.h>
+#include<time.h>
+#include<string.h>
+
+void Prebroji(char[], int*);
+
+int main()
+{
+	char recenica[100];
+	int brojRijeci=0;
+
+	fgets(recenica, sizeof(recenica), stdin);
+
+	Prebroji(recenica, &brojRijeci);
+
+	printf("%d", brojRijeci);
+
+	system("pause");
+
+	return 0;
+}
+
+void Prebroji(char recenica[], int* pokNaBrojac)
+{
+	int velicinaRecenice, i, test=0;
+	velicinaRecenice = strlen(recenica);
+
+	for (i = 0; i < velicinaRecenice; i++)
+	{
+		if (test == 0 && ((recenica[i] != ' ') && (recenica[i] != '\n')))
+		{
+			test = 1;
+			(*pokNaBrojac)++;
+		}
+		if (test == 1 && recenica[i] == ' ')
+		{
+			test = 0;
+		}
+	}
+
+}
