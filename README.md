@@ -1,1 +1,1 @@
-# C
+Riješeni zadaci za repeticije C
